@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-5">
+        {% with messages = get_flashed_messages()%}
+            {% if messages %}
+            {% for message in messages %}
+                
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="card card-body">
+            <form action="/agregar" method="POST">
+                <div class="form-group">
+                    <input type="text" name="nombre" placeholder="Nombre Completo" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="telefono" placeholder="Teléfono" class="form-control">
+                </div>    
+                <div class="form-group">
+                    <input type="text" name="email" placeholder="Email" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                </div>
+                
+            </form> 
+        </div> 
+    </div>
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-white table-sm" >
+            <thead>
+                <tr>
+                    <td>Nombre</td>
+                    <td>telefono</td>
+                    <td>Email</td>
+                    <td>Operaciones</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contacto in contactos %}
+                    <tr>
+                        <td>{{contacto.1}}</td>
+                        <td>{{contacto.2}}</td>
+                        <td>{{contacto.3}}</td>
+                        <td>
+                            <a href="/editar/{{contacto.0}}" class="btn btn-secondary">Editar</a>
+                            <a href="/eliminar/{{contacto.0}}" class="btn btn-danger btn-delete">Borrar</a>
+                        </td>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}
